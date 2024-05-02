@@ -1,6 +1,7 @@
 package com.example.db.controller;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,17 +16,41 @@ import com.example.db.model.Rating;
 import com.example.db.model.Movie;
 import com.example.db.repository.RatingRepository;
 import com.example.db.repository.MovieRepository;
+import com.example.db.repository.AchievementRepository;
+import com.example.db.achievement.AchievementManager;
 import com.example.db.controller.RatingNotFoundException;
 import com.example.db.controller.RatingMovieWrongParamException;
+import com.example.db.achievement.ActivityView;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RestController
 class RatingController {
     private final RatingRepository repository;
     private final MovieRepository movieRepository;
+    private final AchievementRepository achvRepository;
+    private final AchievementManager achvManager;
 
-    RatingController(RatingRepository repository, MovieRepository movieRepository) {
+    private static final Logger log = LoggerFactory.getLogger(RatingController.class);
+
+    RatingController(
+      RatingRepository repository, MovieRepository movieRepository, AchievementRepository achvRepository) {
         this.repository = repository;
         this.movieRepository = movieRepository;
+        this.achvRepository = achvRepository;
+        this.achvManager = AchievementManager.getInstance();
+    }
+
+    private void processEvent(String userId, Long timestamp) {
+		List<Rating> ratings = repository.findAllByUserId(userId);
+        List<String> movieIds = new ArrayList<String>();
+        for (Rating elm: ratings) {
+            movieIds.add(elm.getMovieId());
+        }
+        List<Movie> movies = movieRepository.findByIdIn(movieIds);
+        ActivityView view = new ActivityView(movies);
+        achvManager.update(achvRepository, userId, view, timestamp);
     }
 
     @GetMapping("/ratings")
@@ -35,7 +60,9 @@ class RatingController {
 
     @PostMapping("/ratings")
     Rating newRating(@RequestBody Rating newRating) {
-        return repository.save(newRating);
+        Rating result = repository.save(newRating);
+        processEvent(newRating.getUserId(), newRating.getTimestamp());
+        return result;
     }
 
     @GetMapping("/ratings/minRating")

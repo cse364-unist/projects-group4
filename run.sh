@@ -1,6 +1,7 @@
 mkdir -p /data/log/
 
 mongod --dbpath /data/db --logpath /data/log/mongo.log --fork
+# mongod --dbpath ~/data/db --logpath ~/data/log/mongodb/mongo.log
 
 cd project
 
