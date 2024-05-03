@@ -58,24 +58,20 @@ public class AchievementManager {
 
     public void update(AchievementRepository repository, String userId, ActivityView view, Long timestamp) {
         // log.info(view.getTotalReviews().toString());
-        String[] genres = {"Action", "Adventure", "Comedy", "Drama", "Romance"};
-        log.info(view.genreCount.toString());
-        for (String genre: genres) {
-            log.info(view.getGenreCount(genre).toString());
-        }
+        // String[] genres = {"Action", "Adventure", "Comedy", "Drama", "Romance"};
+        // log.info(view.genreCount.toString());
+        // for (String genre: genres) {
+        //     log.info(view.getGenreCount(genre).toString());
+        // }
 
         for (AchievementLogic logic: logics) {
             AchievementId id = new AchievementId(userId, logic.getName());
             Float oldProgress = this.getProgress(repository, id);
-            // log.info("d1");
             if (oldProgress >= 100.0)
                 continue;
             Float newProgress = logic.getProgress(view);
-            // log.info("d2");
             if (oldProgress < newProgress) {
-                // log.info("e3");
                 this.setAchievement(repository, id, newProgress, timestamp);
-                // log.info("e4");
             }
         }
     }

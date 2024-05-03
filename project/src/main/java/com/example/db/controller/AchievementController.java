@@ -1,6 +1,7 @@
 package com.example.db.controller;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +28,16 @@ class AchievementController {
     @GetMapping("/achievements")
     List<Achievement> all() {
         return repository.findAll();
+    }
+
+    @GetMapping("/achievements/{userId}")
+    List<Achievement> all(@PathVariable String userId) {
+        List<Achievement> l = new ArrayList<>();
+        for (Achievement it: repository.findAll()) {
+            if (it.getId().getUserId().equals(userId))
+                l.add(it);
+        }
+        return l;
     }
 
     @GetMapping("/achievements/{userId}/{achievement}")

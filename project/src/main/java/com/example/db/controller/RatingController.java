@@ -1,7 +1,10 @@
 package com.example.db.controller;
 
 import java.util.List;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +24,7 @@ import com.example.db.achievement.AchievementManager;
 import com.example.db.controller.RatingNotFoundException;
 import com.example.db.controller.RatingMovieWrongParamException;
 import com.example.db.achievement.ActivityView;
+import com.example.db.model.RecapObject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,6 +77,17 @@ class RatingController {
         return movieRepository.findByIdIn(movieIds);
     }
 
+    @GetMapping("/ratings/summary/{movieId}")
+    Integer[] findByMovieId(@PathVariable String movieId) {
+        List<Rating> l = repository.findAllByMovieId(movieId);
+        Integer[] data = new Integer[6];
+        for (int i = 0; i < 6; ++i) data[i] = 0;
+        for (Rating it: l) {
+            data[it.getRating()]++;
+        }
+        return data;
+    }
+
     @GetMapping("/ratings/{id}")
     Rating one(@PathVariable String id) {
         return repository.findById(id)
@@ -98,5 +113,74 @@ class RatingController {
     @DeleteMapping("/ratings/{id}")
     void deleteRating(@PathVariable String id) {
         repository.deleteById(id);
+    }
+
+    // What recap includes in itself (by userId):
+    // 1) Total number of ratings done by user in a certain period of time 
+    // 2) Top 3 genres of movies (based on ratings done)
+    // 3) Most popular movie user watched (popularity = count of ratings on that movie)
+
+    // deltaTime is in seconds
+    @GetMapping("/recap/{userId}")
+    RecapObject getRecap(@PathVariable String userId, @RequestParam Long currentTime, @RequestParam Long deltaTime) {
+        RecapObject ret = new RecapObject();
+        // 1)
+        // ratings -> timestamp \in [currentTime-deltaTime; currentTime]
+        for (Rating it : repository.findAll()) {
+            if (it.getUserId().equals(userId) && it.getTimestamp() >= currentTime-deltaTime) { 
+                ret.setTotalRatings(ret.getTotalRatings()+1);
+            }
+        }
+
+        // 2) maybe needs optimization (hash or something easy koroche)
+        HashMap<String, Integer> count = new HashMap<>();
+        for (Rating rating : repository.findAll()) {
+            if (!rating.getUserId().equals(userId)) continue;
+
+            Movie it = movieRepository.findById(rating.getMovieId()).get();
+            String[] genres = it.getGenres().split("\\|", 0);
+            for (String genre : genres) {
+                int prevCount = 0;
+                if (count.containsKey(genre)) {
+                    prevCount = count.get(genre);
+                }
+                count.put(genre, prevCount+1);
+            }
+        }
+        
+        List<String> top3 = new LinkedList<>();
+        for (String genre : count.keySet()) {
+            top3.add(genre);
+            if (top3.size() > 3) {
+                String min = "";
+                for (String x : top3) {
+                    if (min.isEmpty() || count.get(min) > count.get(x)) {
+                        min = x;
+                    }
+                }
+                top3.remove(min);
+            }
+        }
+        ret.setTop3genre(top3);
+        
+        // 3)
+        count.clear();
+        for (Rating rating : repository.findAll()) { 
+            if (!rating.getUserId().equals(userId)) continue; 
+            int prevCount = 0;
+            if (count.containsKey(rating.getMovieId())) {
+                prevCount = count.get(rating.getMovieId());
+            }
+            count.put(rating.getMovieId(), prevCount+1);
+        }
+        String mostPopular = "";
+        for (Rating rating : repository.findAll()) { 
+            if (!rating.getUserId().equals(userId)) continue; 
+            if (mostPopular.isEmpty() || count.get(mostPopular) < count.get(rating.getMovieId())) {
+                mostPopular = rating.getMovieId();
+            } 
+        }
+        ret.setMostPopularMovieId(mostPopular);
+        return ret;
     }
 }

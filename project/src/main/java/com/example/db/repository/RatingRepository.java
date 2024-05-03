@@ -11,4 +11,5 @@ import com.example.db.repository.RatingRepositoryCustom;
 
 public interface RatingRepository extends MongoRepository<Rating, String>, RatingRepositoryCustom {
     List<Rating> findAllByUserId(String userId);
+    List<Rating> findAllByMovieId(String movieId);
 }
