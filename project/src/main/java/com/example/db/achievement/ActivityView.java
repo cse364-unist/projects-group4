@@ -8,13 +8,13 @@ import com.example.db.model.Movie;
 
 public class ActivityView {
     private Integer totalReviews;
-    private Map<String, Integer> genreCount;
+    public Map<String, Integer> genreCount;
 
     public ActivityView (List<Movie> movies) {
         totalReviews = movies.size();
         genreCount = new HashMap<String, Integer>();
         for (Movie elm: movies) {
-            String[] genres = elm.getGenres().split("|", 64);
+            String[] genres = elm.getGenres().split("\\|", -1);
             for (String genre: genres) {
                 Integer count = this.getGenreCount(genre);
                 genreCount.put(genre, count + 1);

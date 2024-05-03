@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 
 import com.example.db.achievement.logic.AchievementLogic;
 import com.example.db.achievement.logic.ReviewOne;
+import com.example.db.achievement.logic.ReviewTen;
+import com.example.db.achievement.logic.BigFiveOne;
+import com.example.db.achievement.logic.BigFiveTen;
 import com.example.db.achievement.ActivityView;
 import com.example.db.repository.AchievementRepository;
 import com.example.db.model.AchievementId;
@@ -24,6 +27,9 @@ public class AchievementManager {
     private AchievementManager() {
         this.logics = new ArrayList<AchievementLogic>();
         addLogic(new ReviewOne());
+        addLogic(new ReviewTen());
+        addLogic(new BigFiveOne());
+        addLogic(new BigFiveTen());
     }
 
     public static AchievementManager getInstance() {
@@ -52,6 +58,12 @@ public class AchievementManager {
 
     public void update(AchievementRepository repository, String userId, ActivityView view, Long timestamp) {
         // log.info(view.getTotalReviews().toString());
+        String[] genres = {"Action", "Adventure", "Comedy", "Drama", "Romance"};
+        log.info(view.genreCount.toString());
+        for (String genre: genres) {
+            log.info(view.getGenreCount(genre).toString());
+        }
+
         for (AchievementLogic logic: logics) {
             AchievementId id = new AchievementId(userId, logic.getName());
             Float oldProgress = this.getProgress(repository, id);
