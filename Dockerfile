@@ -1,6 +1,9 @@
 # Use Ubuntu 22.04 as base image
 FROM ubuntu:22.04
 
+ENV TZ="Asia/Seoul"
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 # Install prerequisites
 RUN apt-get update \
     && apt-get install -y wget gnupg2 \
@@ -13,7 +16,9 @@ RUN wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | apt-key add -
 RUN echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-6.0.list
 
 # Update package list and install MongoDB
+
 RUN apt-get update \
+    && apt-get install --assume-yes git \
     && apt-get install -y mongodb-org \
     && rm -rf /var/lib/apt/lists/*
 
@@ -29,6 +34,6 @@ RUN apt-get update && apt-get install -y \
     maven
 RUN apt install curl
 WORKDIR /app
-COPY project/ /app/project/
+# COPY project/ /app/project/
 COPY run.sh /app/run.sh
 RUN chmod +x /app/run.sh
