@@ -25,7 +25,7 @@ Instead, state-of-the-art summary algorithm was chosen to be implemented: Intera
 8) `POST /achievements/ - Post new achievement.`
 9) `PUT /achievements/{userId}/{achievement} - Update achievement.`
 10) `DELETE /achievements/{userId}/{achievement} - Delete achievement.`
-In addition, we have implemented wrapper around Review CRUD's so that it will update Achihevements automatically. 
+In addition, we have implemented wrapper around Review CRUD's so that it will update Achievements automatically. 
  
 ### 4. List of example curl commands for each REST API and the expected output of each curl command.
 
