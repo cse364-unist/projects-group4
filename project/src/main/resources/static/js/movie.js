@@ -20,7 +20,6 @@ function parseTitle(title) {
 function updatePage(data) {
     document.title = data.Title;
     $('#title').text(data.Title);
-    $('#rating').text("1.5 out of 5");
     $('#release').text(data.Released);
     $('#country').text(data.Country);
     $('#director').text(data.Director);
@@ -41,7 +40,6 @@ function askOMDB(title, year) {
       event.preventDefault();
       if (this.status == 200) {
         var result = JSON.parse(this.responseText);
-        console.log(result);
         updatePage(result);
       } else {
         alert(`Could not find a movie with ${title} (${year})`);
@@ -53,10 +51,8 @@ function askOMDB(title, year) {
 
 function renderMetadata() {
     const movieId = $('#movie').data('movieid');
-    const urlapi = `http://localhost:8080/movies/${encodeURIComponent(movieId)}`;
-    console.log(urlapi);
-    console.log("Movie ID:", movieId);
-    
+    const urlapi = `http://localhost:8080/movies/${movieId}`;
+    console.log('Movie Metadata');
     $.ajax({
         url: urlapi,
         type: "GET",
@@ -64,7 +60,6 @@ function renderMetadata() {
         contentType: "application/json; charset=utf-8",
         success: function(response) {
             console.log("Success:", response);
-
             const data = parseTitle(response.title);
             const title = data.name;
             const year = data.year;
@@ -78,7 +73,34 @@ function renderMetadata() {
     });
 }
 
+function renderSmartPlot() {
+    const movieId = $('#movie').data('movieid');
+    const urlapi = `http://localhost:8080/ratings/summary/${movieId}`;
+    console.log('Smart Plot');
+    $.ajax({
+        url: urlapi,
+        type: "GET",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function(response) {
+            console.log("Success:", response);
+            bar.initData(response);
+        },
+        error: function(xhr, status, error) {
+            console.error("Error:", error);
+        }
+    });
+    $('#c1').on('change', bar.changeGender);
+    $('#c2').on('change', bar.changeGender);
+    $('#c3').on('change', bar.changeAge);
+    $('#c4').on('change', bar.changeAge);
+    $('#c5').on('change', bar.changeAge);
+}
+
+const bar = new barChart();
+
 $(document).ready(function() {
     renderMetadata();
+    renderSmartPlot();
     // Rendering BarChart
 });

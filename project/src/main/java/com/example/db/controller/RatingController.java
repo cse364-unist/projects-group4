@@ -17,14 +17,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.db.model.Rating;
 import com.example.db.model.Movie;
+import com.example.db.model.User;
 import com.example.db.repository.RatingRepository;
 import com.example.db.repository.MovieRepository;
+import com.example.db.repository.UserRepository;
 import com.example.db.repository.AchievementRepository;
 import com.example.db.achievement.AchievementManager;
 import com.example.db.controller.RatingNotFoundException;
 import com.example.db.controller.RatingMovieWrongParamException;
 import com.example.db.achievement.ActivityView;
 import com.example.db.model.RecapObject;
+import com.example.db.model.RatingData;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,15 +36,17 @@ import org.slf4j.LoggerFactory;
 class RatingController {
     private final RatingRepository repository;
     private final MovieRepository movieRepository;
+    private final UserRepository userRepository;
     private final AchievementRepository achvRepository;
     private final AchievementManager achvManager;
 
     private static final Logger log = LoggerFactory.getLogger(RatingController.class);
 
     RatingController(
-      RatingRepository repository, MovieRepository movieRepository, AchievementRepository achvRepository) {
+      RatingRepository repository, MovieRepository movieRepository, UserRepository userRepository, AchievementRepository achvRepository) {
         this.repository = repository;
         this.movieRepository = movieRepository;
+        this.userRepository = userRepository;
         this.achvRepository = achvRepository;
         this.achvManager = AchievementManager.getInstance();
     }
@@ -77,15 +82,40 @@ class RatingController {
         return movieRepository.findByIdIn(movieIds);
     }
 
+    // @GetMapping("/ratings/summary/{movieId}")
+    // List<Rating> findByMovieId(@PathVariable String movieId) {
+    //     List<Rating> l = repository.findAllByMovieId(movieId);
+    //     // Integer[] data = new Integer[6];
+    //     // for (int i = 0; i < 6; ++i) data[i] = 0;
+    //     // for (Rating it: l) {
+    //     //     data[it.getRating()]++;
+    //     // }
+    //     // return data;
+    //     List<int[]> myList = new ArrayList<int[]>();
+    //     Map<String, Integer> data = new HashMap<String, Integer>();
+    //     for (Rating it: l) {
+
+    //     }
+
+    //     return l;
+    // }
+
     @GetMapping("/ratings/summary/{movieId}")
-    Integer[] findByMovieId(@PathVariable String movieId) {
-        List<Rating> l = repository.findAllByMovieId(movieId);
-        Integer[] data = new Integer[6];
-        for (int i = 0; i < 6; ++i) data[i] = 0;
-        for (Rating it: l) {
-            data[it.getRating()]++;
+    public List<RatingData> findByMovieId(@PathVariable String movieId) {
+        List<Rating> ratings = repository.findAllByMovieId(movieId);
+        List<RatingData> ratingDataList = new ArrayList<>();
+
+        for (Rating rating: ratings) {
+            String userId = rating.getUserId();
+            Integer score = rating.getRating();
+            User user = userRepository.findById(userId).orElseThrow(() -> new RatingNotFoundException("1"));
+            Character gender = user.getGender();
+            Integer age = user.getAge();
+            RatingData ratingData = new RatingData(gender, age, score);
+            ratingDataList.add(ratingData);
         }
-        return data;
+
+        return ratingDataList;
     }
 
     @GetMapping("/ratings/{id}")
