@@ -13,4 +13,10 @@ public class RouteController {
         model.addAttribute("name", movieId);
         return "movie";
     }
+
+    @GetMapping("/search")
+    public String searchPage(@RequestParam(name="title", required=false, defaultValue="Toy Story") String title, Model model) {
+        model.addAttribute("title", title);
+        return "search_page";
+    }
 }
