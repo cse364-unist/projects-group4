@@ -1,0 +1,1 @@
+mvn -f pom_war.xml package  # For WAR
