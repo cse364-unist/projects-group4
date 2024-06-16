@@ -6,7 +6,7 @@ function nameToId(name) {
     if (name == 'BigFiveOne')
         return 'bigfiveone';
     if (name == 'BigFiveTen')
-        return 'bigfivetine';
+        return 'bigfiveten';
     return null;
 }
 

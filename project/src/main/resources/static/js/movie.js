@@ -100,7 +100,39 @@ function renderSmartPlot() {
 const bar = new barChart();
 
 $(document).ready(function() {
+    document.getElementById('leaveform').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const formData = new FormData(this);
+        const urlapi = 'https://example.com/your-post-endpoint';
+
+        const movieId = $('#movie').data('movieid');;
+        const userId = "1";  // Add you user Id here
+        const timestamp = parseInt(new Date().getTime() / 1000);
+        formData.append('movieId', `${movieId}`);
+        formData.append('userId', `${userId}`);
+        formData.append('timestamp', `${timestamp}`);
+
+        var object = {};
+        formData.forEach((value, key) => object[key] = value);
+        var json = JSON.stringify(object);
+
+        // submition problem
+        $.ajax({
+            url: urlapi,
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            data: json,
+            success: function(response) {
+                alert('Form submitter successfully');
+            },
+            error: function(xhr, status, error) {
+                alert(`Error: ${error}`);
+            }
+        });
+    });
     renderMetadata();
     renderSmartPlot();
     // Rendering BarChart
 });
+
+
