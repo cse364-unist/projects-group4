@@ -30,6 +30,14 @@ This is the homepage of our application. It displays a menu bar featuring variou
 * Clicking on the [Achievements] button will redirect the user to the Achievements Page.
 * The Search Bar allows users to search for movies by their names (for example: "Toy Story"). When a user enters a movie name and clicks search, the system presents the matching movie options. By clicking on a movie title from the search results, users can view the Movie Page, where we've implemented our Summary feature.
 
+### 1-2) Search Page
+
+![PHOTO](images/searchmovie.png)
+
+This is the search page of our application. It displays a movies that it found based on the searching movie:
+
+* Clicking on the [Poster] will transfer you to a movie page.
+
 ### 2) Registration Page
 
 ![PHOTO](images/registerpage.jpg)
@@ -54,12 +62,12 @@ Here, users can access their Personal Page by entering the data they used during
 
 ### 5) Achievements Page
 
-[PHOTO OF ACHIEVEMENTS PAGE]
+![PHOTO](images/achievement_before.png)
 
-* Clicking on the [] button does 
-* Clicking on the [] button does 
-* Clicking on the [] button does 
-* Clicking on the [] button does 
+Here, users can see their achievements. It is necessary for the user to be logged in to see their achievements.
+After leaving a review, it will do the necessary update. For example, this is a picture after a new account left a review on Toy Story 1 movie.
+
+![PHOTO](images/achievement_after.png)
 
 ### 6) Movie Page
 
@@ -68,6 +76,10 @@ Here, users can access their Personal Page by entering the data they used during
 On this page, users can view the preview image cover of the movie along with detailed information including its rating, release date, country of origin, director, genre, language, runtime, and plot synopsis. 
 
 Additionally, we've included an interactive bar chart below this data. This bar chart allows users to explore differences in ratings by navigating through various criteria.Users can customize the bar chart by including or excluding certain criteria, such as considering ratings from males only, or considering ratings from different age categories (youth 1-24, adults 25-55, and elderly 56+).
+This is example result:
+
+![PHOTO](images/moviepage_example.png)
+
 
 Below the bar chart, users have the option to submit their own rating for the movie on a scale of 1 to 5. This interactive feature enhances user engagement and allows them to contribute to the community's ratings of the movie.
 
