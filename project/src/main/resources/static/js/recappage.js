@@ -44,7 +44,10 @@ function updatePage(data) {
 }
 
 function genRecap(deltaTime) {
-    const userId = '1'; // $('#info').data('userid');
+    if (!('userId' in localStorage))
+        localStorage['userId'] = 'ddsadsa';
+    const userId = localStorage['userId'];
+   
     const currentTimeInSeconds = Math.floor(Date.now()/1000);
     const dTime = Number(deltaTime) * 24 * 60 * 60;
     const urlapi = `/recap/`+userId+`/?currentTime=`+currentTimeInSeconds+`&deltaTime=`+dTime;
