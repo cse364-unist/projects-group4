@@ -54,11 +54,12 @@ Here, users can access their Personal Page by entering the data they used during
 
 ![PHOTO](images/recappage.jpg)
 
-* Clicking on the [] button does 
-* Clicking on the [] button does 
-* Clicking on the [] button does 
-* Clicking on the [] button does 
+Users enter number of days in the input slot and press the 'Get my Recap!' button to get their Recap. Recap consists of three highlights:
+* Top 3 genres rated (i.e. watched).
+* Total number of ratings done by user in the given period of time.
+* The most popular movie rated by user. Popularity of the movie is calculated by the number of reviews on it.
 
+Recap feature can be used as many times as users wish, with any input number. 
 
 ### 5) Achievements Page
 
