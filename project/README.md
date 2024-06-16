@@ -19,7 +19,7 @@ Our service aims to simplify the movie review process and provide an engaging wa
 
 ### 1) Main Page
 
-[PHOTO OF MAIN PAGE]
+[PHOTO]
 
 This is the homepage of our application. It displays a menu bar featuring various places you can visit:
 
