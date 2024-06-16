@@ -25,4 +25,10 @@ public class RouteController {
         model.addAttribute("userid", userId);
         return "personal_page";
     }
+
+    @GetMapping("/recappage")
+    public String recapPage(@RequestParam(name="userId", required=false, defaultValue="1") String userId, Model model) {
+        model.addAttribute("userId", userId);
+        return "recap_page";
+    }
 }
