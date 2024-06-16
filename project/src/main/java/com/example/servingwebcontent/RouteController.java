@@ -21,8 +21,8 @@ public class RouteController {
     }
 
     @GetMapping("/personalpage")
-    public String personalPage(@RequestParam(name="userId", required=false, defaultValue="1") String userId, Model model) {
-        model.addAttribute("userId", userId);
+    public String personalPage(@RequestParam(name="userId", required=false, defaultValue="") String userId, Model model) {
+        model.addAttribute("userid", userId);
         return "personal_page";
     }
 

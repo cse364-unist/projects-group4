@@ -23,7 +23,9 @@ function updatePage(data) {
 }
 
 function renderMetadata() {
-    const userId = $('#info').data('userid');
+    if (!('userId' in localStorage))
+        localStorage['userId'] = 'ddsadsa';
+    const userId = localStorage['userId'];
     const urlapi = `/achievements`;
     console.log('Movie Metadata');
     $.ajax({
@@ -43,5 +45,8 @@ function renderMetadata() {
 }
 
 $(document).ready(function() {
+    const userId = $('#info').data('userid');
+    if (userId != null)
+        localStorage['userId'] = userId;
     renderMetadata();
 });
