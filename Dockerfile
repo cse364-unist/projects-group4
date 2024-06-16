@@ -32,8 +32,26 @@ RUN chown -R mongodb:mongodb /data/db /data/configdb
 RUN apt-get update && apt-get install -y \
     openjdk-17-jdk \
     maven
-RUN apt install curl
+RUN apt install curl unzip
 WORKDIR /app
+
 # COPY project/ /app/project/
+COPY ROOT.war /app/ROOT.war
+
 COPY run.sh /app/run.sh
+COPY run_war.sh /app/run_war.sh
+
 RUN chmod +x /app/run.sh
+RUN chmod +x /app/run_war.sh
+
+# install tomcat
+RUN wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.89/bin/apache-tomcat-9.0.89.zip
+RUN unzip apache-tomcat-9.0.89.zip
+
+RUN rm -r -f apache-tomcat-9.0.89/webapps/ROOT
+RUN mv ROOT.war apache-tomcat-9.0.89/webapps/ROOT.war
+RUN chmod +x apache-tomcat-9.0.89/bin/catalina.sh
+
+# Run it
+CMD ["bash", "run_war.sh"]
+# docker run -d -p 8080:8080 host image_name
