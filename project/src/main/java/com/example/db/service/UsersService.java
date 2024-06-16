@@ -13,7 +13,7 @@ public class UsersService {
 
    
     private UsersRepository usersRepository;
-    private UserRepository userRepository;
+    //private UserRepository userRepository;
 
     public UsersService(UsersRepository usersRepository){
         this.usersRepository = usersRepository;
@@ -32,16 +32,16 @@ public class UsersService {
             usersModel.setPassword(password);
             usersModel.setEmail(email);
 
-            User nww = new User();
-            nww.setAge(18);
-            nww.setGender('F');
-            nww.setOccupation(1);
-            nww.setZipCode("06810");
+            // User nww = new User();
+            // nww.setAge(18);
+            // nww.setGender('F');
+            // nww.setOccupation(1);
+            // nww.setZipCode("06810");
 
-            String curr = nww.getId();
-            usersModel.setUserId(curr);
+            // String curr = nww.getId();
+            // usersModel.setUserId(curr);
 
-            userRepository.save(nww);
+            // userRepository.save(nww);
             return usersRepository.save(usersModel);
         } else{
             return null;

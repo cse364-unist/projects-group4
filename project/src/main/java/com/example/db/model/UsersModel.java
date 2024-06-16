@@ -18,13 +18,13 @@ public class UsersModel {
     String password;
     String email;
 
-    String userId;
-    public String getUserId() {
-        return userId;
-    }
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
+    // String userId;
+    // public String getUserId() {
+    //     return userId;
+    // }
+    // public void setUserId(String userId) {
+    //     this.userId = userId;
+    // }
     
     
     public Integer getId() {
