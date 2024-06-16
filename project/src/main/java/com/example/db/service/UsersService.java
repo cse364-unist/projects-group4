@@ -13,10 +13,11 @@ public class UsersService {
 
    
     private UsersRepository usersRepository;
-    //private UserRepository userRepository;
+    private UserRepository userRepository;
 
-    public UsersService(UsersRepository usersRepository){
+    public UsersService(UsersRepository usersRepository, UserRepository userRepository){
         this.usersRepository = usersRepository;
+        this.userRepository = userRepository;
     }
 
     public UsersModel registerUser(String login, String password, String email){
@@ -32,16 +33,14 @@ public class UsersService {
             usersModel.setPassword(password);
             usersModel.setEmail(email);
 
-            // User nww = new User();
-            // nww.setAge(18);
-            // nww.setGender('F');
-            // nww.setOccupation(1);
-            // nww.setZipCode("06810");
-
-            // String curr = nww.getId();
-            // usersModel.setUserId(curr);
-
-            // userRepository.save(nww);
+            User nww = new User();
+            nww.setAge(18);
+            nww.setGender('F');
+            nww.setOccupation(1);
+            nww.setZipCode("06810");
+            nww = userRepository.save(nww);
+            String curr = nww.getId();
+            usersModel.setUserId(curr);
             return usersRepository.save(usersModel);
         } else{
             return null;

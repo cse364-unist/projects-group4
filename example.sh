@@ -7,7 +7,7 @@ curl -X POST http://localhost:8080/ratings -H 'Content-type:application/json' \
     -d '{"userId": "10", "movieId": 10, "rating": 5, "timestamp": 10}'
 
 
-curl -X POST http://localhost:8080/ratings -H 'Content-type:application/json' -d '{"userId": "1", "movieId": 10, "rating": 5, "timestamp": 10}'
+curl -X POST http://localhost:8080/ratings -H 'Content-type:application/json' -d '{"userId": "666eb4f7ff8d220b4f55663f", "movieId": 10, "rating": 5, "timestamp": 10}'
 
 
 curl -X GET http://localhost:8080/achievements

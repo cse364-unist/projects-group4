@@ -35,7 +35,7 @@
         </nav>
 </header>
 
-<div class="container" style="padding-top: 60px;" id="info" th:data-userid="${userId}">
+<div class="container" style="padding-top: 60px;" id="info" th:data-userid="${userid}">
     <!-- <h1 class="h1">This is your Personal page! <span th:text="${userLogin}"></span></h1> -->
     <h1 class="h1" style="padding-top: 30px;">Your Achievements</h1>
     <div class="row">
@@ -69,6 +69,7 @@
         </div>
     </div>
 </div>
+<p style="display: none;" id="secretdata" th:data-userid="${userid}"></p>
 <script src="/js/personalpage.js"></script>
 <script src="/js/general.js"></script>
 </body>
