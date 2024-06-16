@@ -35,7 +35,40 @@
         </nav>
 </header>
 
-<h1>This is your Personal page! <span th:text="${userLogin}"></span></h1>
-
+<div class="container" style="padding-top: 60px;" id="info" th:data-userid="${userId}">
+    <!-- <h1 class="h1">This is your Personal page! <span th:text="${userLogin}"></span></h1> -->
+    <h1 class="h1" style="padding-top: 30px;">Your Achievements</h1>
+    <div class="row">
+        <div class="card col-sm-3" style="width: 18rem;">
+            <img src="/img/ReviewOneP.png" class="card-img-top" alt="...">
+            <div class="card-body">
+                <p class="card-text">Review one movie.</p>
+                <span id="reviewone">Your current progress is 0%.</span>
+            </div>
+        </div>
+        <div class="card col-sm-3" style="width: 18rem;" id="review-one">
+            <img src="/img/reviewTen.png" class="card-img-top" alt="...">
+            <div class="card-body">
+                <p class="card-text">Review ten movies.</p>
+                <span id="reviewten">Your current progress is 0%.</span>
+            </div>
+        </div>
+        <div class="card col-sm-3" style="width: 18rem;">
+            <img src="/img/BigFiveOne.png" class="card-img-top" alt="...">
+            <div class="card-body">
+                <p class="card-text">Review Each of Five Main Genres at least once: Action, Adventure, Comedy, Drama, Romance</p>
+                <span id="bigfiveone">Your current progress is 0%.</span>
+            </div>
+        </div>
+        <div class="card col-sm-3" style="width: 18rem;" id="review-one">
+            <img src="/img/BigFiveTen.png" class="card-img-top" alt="...">
+            <div class="card-body">
+                <p class="card-text">Review Each of Five Main Genres at least ten times: Action, Adventure, Comedy, Drama, Romance</p>
+                <span id="bigfiveten">Your current progress is 0%.</span>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/js/personalpage.js"></script>
 </body>
 </html>

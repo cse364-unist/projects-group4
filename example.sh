@@ -6,6 +6,10 @@ curl -X POST http://localhost:8080/ratings -H 'Content-type:application/json' \
 curl -X POST http://localhost:8080/ratings -H 'Content-type:application/json' \
     -d '{"userId": "10", "movieId": 10, "rating": 5, "timestamp": 10}'
 
+
+curl -X POST http://localhost:8080/ratings -H 'Content-type:application/json' -d '{"userId": "1", "movieId": 10, "rating": 5, "timestamp": 10}'
+
+
 curl -X GET http://localhost:8080/achievements
 curl -X POST http://localhost:8080/achievements -H 'Content-type:application/json' \
     -d '{"id": {"userId": "1", "achievement": "ReviewOne"}, "progress": 100, "timestamp": 12}'

@@ -19,4 +19,10 @@ public class RouteController {
         model.addAttribute("title", title);
         return "search_page";
     }
+
+    @GetMapping("/personalpage")
+    public String personalPage(@RequestParam(name="userId", required=true) String userId, Model model) {
+        model.addAttribute("userId", userId);
+        return "personal_page";
+    }
 }
