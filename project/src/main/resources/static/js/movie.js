@@ -102,31 +102,23 @@ const bar = new barChart();
 $(document).ready(function() {
     document.getElementById('leaveform').addEventListener('submit', function(event) {
         event.preventDefault();
-        const formData = new FormData(this);
-        const urlapi = 'https://example.com/your-post-endpoint';
-
+        const score = 5;
         const movieId = $('#movie').data('movieid');;
-        const userId = "1";  // Add you user Id here
+        if (!('userId' in localStorage))
+            localStorage['userId'] = 'ddsadsa';
+        const userId = localStorage['userId'];
         const timestamp = parseInt(new Date().getTime() / 1000);
-        formData.append('movieId', `${movieId}`);
-        formData.append('userId', `${userId}`);
-        formData.append('timestamp', `${timestamp}`);
 
-        var object = {};
-        formData.forEach((value, key) => object[key] = value);
-        var json = JSON.stringify(object);
-
+        const urlapi = `/ratings/?movieId=${movieId}&userId=${userId}&timestamp=${timestamp}&score=${score}`;
         // submition problem
         $.ajax({
             url: urlapi,
             type: "POST",
             contentType: "application/json; charset=utf-8",
-            data: json,
             success: function(response) {
-                alert('Form submitter successfully');
+                alert('Form submitted successfully');
             },
             error: function(xhr, status, error) {
-                alert(`Error: ${error}`);
             }
         });
     });

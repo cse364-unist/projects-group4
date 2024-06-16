@@ -67,8 +67,21 @@ class RatingController {
         return repository.findAll();
     }
 
+    // @PostMapping("/ratings")
+    // Rating newRating(@RequestBody Rating newRating) {
+    //     Rating result = repository.save(newRating);
+    //     processEvent(newRating.getUserId(), newRating.getTimestamp());
+    //     return result;
+    // }
+
     @PostMapping("/ratings")
-    Rating newRating(@RequestBody Rating newRating) {
+    Rating newRatingParams(@RequestParam String movieId,
+      @RequestParam String userId, @RequestParam Long timestamp, @RequestParam Integer score) {
+        Rating newRating = new Rating();
+        newRating.setMovieId(movieId);
+        newRating.setUserId(userId);
+        newRating.setRating(score);
+        newRating.setTimestamp(timestamp);
         Rating result = repository.save(newRating);
         processEvent(newRating.getUserId(), newRating.getTimestamp());
         return result;
