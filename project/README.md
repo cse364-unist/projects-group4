@@ -52,7 +52,7 @@ Here, users can access their Personal Page by entering the data they used during
 
 ### 4) Recap Page
 
-[PHOTO OF RECAP PAGE]
+![PHOTO](images/recappage.jpg)
 
 * Clicking on the [] button does 
 * Clicking on the [] button does 
