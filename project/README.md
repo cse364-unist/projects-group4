@@ -19,7 +19,7 @@ Our service aims to simplify the movie review process and provide an engaging wa
 
 ### 1) Main Page
 
-[PHOTO]
+![PHOTO](images/mainpage.jpg)
 
 This is the homepage of our application. It displays a menu bar featuring various places you can visit:
 
@@ -32,13 +32,13 @@ This is the homepage of our application. It displays a menu bar featuring variou
 
 ### 2) Registration Page
 
-[PHOTO OF Registration PAGE]
+![PHOTO](images/registerpage.jpg)
 
 Here, users can register for the service by providing their "login," "email," and "password." The password must meet certain criteria: it should contain at least one number, one uppercase letter, one lowercase letter, and be at least 8 characters long. After successful registration, the user is redirected back to the Login Page.
 
 ### 3) Login Page
 
-[PHOTO OF Login PAGE]
+![PHOTO](images/loginpage.jpg)
 
 Here, users can access their Personal Page by entering the data they used during registration. If the user enters incorrect information, they will be redirected to the Error Page.
 
@@ -63,7 +63,7 @@ Here, users can access their Personal Page by entering the data they used during
 
 ### 6) Movie Page
 
-[PHOTO OF MOVIE PAGE]
+![PHOTO](images/moviepage.jpg)
 
 * Clicking on the [] button does 
 * Clicking on the [] button does 
